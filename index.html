@@ -21,7 +21,7 @@
         max-width: 600px;
         width: 95%;
         margin: 20px;
-        padding: 25px;
+        padding: 10px;
         border: 2px solid #000;
         border-radius: 8px;
         box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
@@ -36,7 +36,7 @@
       p {
         line-height: 1.6;
         font-size: 16px;
-        text-align: justify;
+        text-align: left;
         margin-bottom: 15px;
       }
       .signature {
@@ -133,14 +133,22 @@
       const noBtn = document.getElementById("no");
       let size = 1;
       function moveButton() {
-        const container = document.querySelector(".contract");
-        const maxX = container.clientWidth - noBtn.offsetWidth;
-        const maxY = container.clientHeight - noBtn.offsetHeight;
+        const buttons = document.querySelector(".buttons");
+        const btnRect = noBtn.getBoundingClientRect();
+        const containerRect = buttons.getBoundingClientRect();
 
-        const randX = Math.floor(Math.random() * maxX);
-        const randY = Math.floor(Math.random() * maxY);
+        // Butonun sadece .buttons kapsayıcısı içinde hareket etmesi için
+        const maxX = buttons.clientWidth - noBtn.offsetWidth;
+        const maxY = buttons.clientHeight - noBtn.offsetHeight;
 
-        noBtn.style.transform = `translate(${randX}px, ${randY}px) scale(${size})`;
+        // Rastgele konum hesapla (0 ile maxX/maxY arasında)
+        const randX = Math.max(0, Math.floor(Math.random() * maxX));
+        const randY = Math.max(0, Math.floor(Math.random() * maxY));
+
+        noBtn.style.position = "absolute";
+        noBtn.style.left = randX + "px";
+        noBtn.style.top = randY + "px";
+        noBtn.style.transform = `scale(${size})`;
 
         size -= 0.1;
         if (size <= 0.2) {
